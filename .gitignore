@@ -1,0 +1,8 @@
+# 环境和缓存
+.venv/
+venv/
+__pycache__/
+.DS_Store
+
+# 数据文件太大，不上传 GitHub（README 里放数据来源链接）
+data/
