@@ -1,6 +1,6 @@
 # 数据字典 Data Dictionary
 
-数据集：Online Retail II（UCI / Kaggle 公开数据集，英国注册制礼品电商 2009-12 ~ 2011-12 的真实交易流水）
+数据集：Online Retail II（UCI / Kaggle 公开数据集，英国一家注册礼品批发商 2009-12 ~ 2011-12 的真实交易流水）
 原始文件：`data/online_retail_II.csv`，1,067,371 行 × 8 列
 
 ## 字段说明
