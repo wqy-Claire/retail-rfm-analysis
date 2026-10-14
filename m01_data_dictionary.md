@@ -1,37 +1,23 @@
-InvoiceNo 订单号（C 开头=退货）、StockCode 商品编码、Description 商品名、Quantity 数量（负=退货）、InvoiceDate 下单时间、UnitPrice 单价、CustomerID 客户ID（有缺失）、Country 国家
+# 数据字典 Data Dictionary
 
-raw_data(1067371, 8)
+数据集：Online Retail II（UCI / Kaggle 公开数据集，英国注册制礼品电商 2009-12 ~ 2011-12 的真实交易流水）
+原始文件：`data/online_retail_II.csv`，1,067,371 行 × 8 列
 
-df类型
-Invoice            str 
-StockCode          str
-Description        str Y
-Quantity         int64 Y
-InvoiceDate        str ？
-Price          float64 Y
-Customer ID    float64 
-Country            str 
+## 字段说明
 
-df空缺值个数
-Invoice             0
-StockCode           0
-Description      4382
-Quantity            0
-InvoiceDate         0
-Price               0
-Customer ID    243007
-Country             0
+| 字段 | 含义 | 类型 | 缺失 | 备注 |
+|---|---|---|---|---|
+| Invoice | 订单号 | str | 0 | **C 开头 = 退货单**（全表 19,494 行） |
+| StockCode | 商品编码 | str | 0 | 如 85123A；部分为非商品编码（运费、坏账等） |
+| Description | 商品名称 | str | 4,382 | 缺失行的 Customer ID **100% 也缺失** |
+| Quantity | 购买数量 | int64 | 0 | 负值 = 退货/冲销（min -80,950） |
+| InvoiceDate | 下单时间 | str（应转 datetime） | 0 | 格式 2009-12-01 07:45:00 |
+| Price | 单价（英镑） | float64 | 0 | ≤0 的为赠品/冲销（min -53,594） |
+| Customer ID | 客户编号 | float64（应转 str） | 243,007 | 缺失则无法定位用户，RFM 必须删除 |
+| Country | 国家/地区 | str | 0 | 共 43 个，绝大多数为 United Kingdom |
 
-df重复行数
-34335
+## 体检摘要（详见 m02_cleaning_log.md）
 
-df的描述
-           Quantity         Price    Customer ID
-count  1.067371e+06  1.067371e+06  824364.000000
-mean   9.938898e+00  4.649388e+00   15324.638504
-std    1.727058e+02  1.235531e+02    1697.464450
-min   -8.099500e+04 -5.359436e+04   12346.000000
-25%    1.000000e+00  1.250000e+00   13975.000000
-50%    3.000000e+00  2.100000e+00   15255.000000
-75%    1.000000e+01  4.150000e+00   16797.000000
-max    8.099500e+04  3.897000e+04   18287.000000
+- 完全重复行：34,335
+- 时间跨度：2009-12-01 ~ 2011-12-09（RFM 快照日建议取 2011-12-10）
+- 极端值：Quantity max 80,950、Price max 38,970 —— 批发大单，暂保留
